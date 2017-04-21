@@ -1,0 +1,50 @@
+---
+title: "Statistical Inference Course - Project 2:  Part 1"
+author: "David Proksch"
+date: "4/15/2017"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Project Overview
+The goal of this project is to investigate the exponential distribution in R, comparing the exponential distribution to the normal distribution and the Central Limit Theorem.  The source code for this project can be found on Github:  https://github.com/dproksch/Stat-Inf-projet2
+
+```{r include=FALSE}
+library(ggplot2)
+
+source("multiplot.R")
+source("Funcs.R")
+lamba <- 0.2
+meanED <- 1 / lamba
+sdED <- 1 / lamba
+numED <- 40
+seed <- 13
+numSim <- 1000
+
+set.seed(seed = seed)
+
+```
+
+## Create and Graph the Expoential Distribution
+The exponential distribution is created using the R function, rexp(n,lambda).  For this simulation, lamba will be set at a constant 0.2, and n will be set to 40,000.  40,000 is derived by using a sample size of 40, and the number of simulations being set to 1,000.   The R package, ggplot, will then be used to graph the generated rexp distribution.
+
+```{r}
+histogramExponentialDistribution(seed = seed, lamba = lamba, sims = numSim, n = numED)
+```
+
+## Compare Sample and Theoretical Means of the Distribution
+
+```{r}
+
+```
+
+## Histogram Graph of the Sample and Theoretical Mean of the Distribution
+
+```{r}
+
+```
