@@ -7,7 +7,7 @@ output:
   html_document: default
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, cache=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -38,13 +38,15 @@ histogramExponentialDistribution(seed = seed, lamba = lamba, sims = numSim, n = 
 ```
 
 ## Compare Sample and Theoretical Means of the Distribution
+The exponential distribution, with the same seed, will now be used to calculate the mean of 40 values which are created by running the rexp(n,lamba) function 1,000 times.  Once the means have been calculated, a histogram of the results will be created.  After the histogram is created, the Sample and Theoretical Means will be calculated and plotted on the histogram.
+
 
 ```{r}
-
+e <- histogramSampleTheoreticalMeans(seed = seed, lamba = lamba, sims = numSim, n=numED)
 ```
 
-## Histogram Graph of the Sample and Theoretical Mean of the Distribution
+## Compare the Standard Normal Distribution of Exponential Distribution Sample Means
 
 ```{r}
-
+histogramNormalDistribuion(lamba = lamba, n = numED, expdatamns = e)
 ```
