@@ -46,7 +46,7 @@ e <- histogramSampleTheoreticalMeans(seed = seed, lamba = lamba, sims = numSim, 
 ```
 
 ## Compare the Standard Normal Distribution of Exponential Distribution Sample Means
-
+Referring back to the historgram in the previous section, it does resemle a Gaussian distribution.  Since this has similar properties to the Gaussian distribution, it can follow that the mean of this sample has a similar mean of the Normal Distribution.  I did find that for larger simulations, the exponential distribution exhibited more Gaussian properties, however, this experiement was outside the scope of this three page report.  It can be reproduce by modifying the associated R scripts and changing the number of simulations to a larger value.
 ```{r}
 histogramNormalDistribuion(lamba = lamba, n = numED, expdatamns = e)
 ```

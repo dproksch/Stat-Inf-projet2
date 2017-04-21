@@ -39,7 +39,7 @@ histogramSampleTheoreticalMeans <- function(seed, lamba,sims,n) {
   # Create the histogram and decorate with means, standard deviations
   #
   grph <- ggplot(expdatamns, aes(x = xmns)) + 
-    geom_histogram(alpha = .20, binwidth=0.05, colour = "blue")+
+    geom_histogram(alpha = .20, binwidth=0.20, colour = "blue")+
     scale_x_continuous(breaks=2:8)+
     labs(x="Sample mean",y="Frequency")+
     theme(plot.title = element_text(size = 14, face = "bold", colour = "black", vjust = +1))+  
@@ -72,7 +72,7 @@ histogramNormalDistribuion <- function(lamba = lamba, n = n, expdatamns = expdat
   expdatamns<-mutate(expdatamns,nval=sqrt(n)*(expdatamns$xmns-mn)/stdev)
   
   grph <- ggplot(expdatamns, aes(x = nval)) + geom_histogram(alpha = .20, 
-              binwidth=0.05, colour = "blue", aes(y = ..density..)) +
+              binwidth=0.2, colour = "blue", aes(y = ..density..)) +
     stat_function(fun = dnorm, size = 2)+
     geom_vline(xintercept=mean(expdatamns$nval),size=1, colour="red", linetype=2)+
     labs(x="Normalized sample mean",y="Frequency")+
