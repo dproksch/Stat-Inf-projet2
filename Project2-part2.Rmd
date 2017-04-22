@@ -1,0 +1,122 @@
+---
+title: "Statistical Inference Course - Project 2:  Part 2"
+author: "David Proksch"
+date: "4/21/2017"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Statistical Inference Course - Project 2, Part 2
+
+## Project Overview
+The goal of this project is to load the Tooth Growth dataset and perform basic data exploration and analysis:
+
+
+## Load the required Data
+```{r}
+library(ggplot2)
+library(datasets)
+
+data("ToothGrowth")
+toothGrowth <- ToothGrowth
+toothGrowth$dose <- as.factor(toothGrowth$dose)
+```
+
+## Basic Summary of the Data
+
+
+
+```{r}
+str(toothGrowth)
+summary(toothGrowth)
+head(toothGrowth)
+table(toothGrowth$supp, toothGrowth$dose)
+```
+
+Compare tooth length and Vitamin C doses using a scatterplot -
+
+```{r echo=FALSE}
+grph <- ggplot(aes(x=dose, y = len), data = ToothGrowth) + 
+    geom_point(aes(color = supp)) 
+grph
+```
+
+Compare tooth length and delivery methods using a boxplot -
+
+```{r echo=FALSE}
+grph <- ggplot(aes(x = supp, y = len), data = ToothGrowth) + 
+    geom_boxplot(aes(fill = supp))
+grph
+```
+
+Compare Vitamin C dose levels and tooth length with a boxplot -
+
+```{r echo=FALSE}
+grph <- ggplot(aes(x = factor(dose), y = len), data = ToothGrowth) + 
+    geom_boxplot(aes(fill = factor(dose)))
+grph
+```
+
+Initial data analysis suggests that the dosage appears to have a significant impact on the length of teeth.  The impact of the supplement is not as obvious.  The length of the teeth appears to be maximized when Vitamin C is given as a supplement.
+
+## Hypothesis Testing and Confidence Intervals
+
+## Impact of Supplements
+Test for a correlation between delivery method and tooth growth.  The null hypothesis is the there is no correlation between delivery method and tooth length.
+
+```{r}
+t.test(len ~ supp, paired = F, var.equal = F, data = ToothGrowth)
+```
+
+A confidence interval of [-0.171, 7.571] does not allow us to reject the null hypothesis.
+
+## Impact of Dosage
+
+Test for a correlation between the dose level and tooth growth.  The null hypothesis is there is no correlation between dose level and tooth growth.
+
+```{r}
+dose1 <- subset(ToothGrowth, dose %in% c(0.5, 1.0))
+dose2 <- subset(ToothGrowth, dose %in% c(0.5, 2.0))
+dose3 <- subset(ToothGrowth, dose %in% c(1.0, 2.0))
+t.test(len ~ dose, paired = F, var.equal = F, data = dose1)
+t.test(len ~ dose, paired = F, var.equal = F, data = dose2)
+t.test(len ~ dose, paired = F, var.equal = F, data = dose3)
+```
+
+The confidence intervals ([-11.98, -6.276] for doses 0.5 and 1.0, [-18.16, -12.83] for doses 0.5 and 2.0, and [-8.996, -3.734] for doses 1.0 and 2.0) allow for the rejection of the null hypothesis.  This suggests there is a correlation between dose levels and tooth length.
+
+## Impact of the Supplement with Dosage Levels
+
+Test for a correlation between the dosage levels and tooth growth with each dosage level.  
+
+```{r}
+Tooth.dose5 <- subset(ToothGrowth, dose == 0.5)
+Tooth.dose1 <- subset(ToothGrowth, dose == 1.0)
+Tooth.dose2 <- subset(ToothGrowth, dose == 2.0)
+t.test(len ~ supp, paired = F, var.equal = F, data = Tooth.dose5)
+t.test(len ~ supp, paired = F, var.equal = F, data = Tooth.dose1)
+t.test(len ~ supp, paired = F, var.equal = F, data = Tooth.dose2)
+```
+
+Dose levels 0.5mg and 1.0mg([1.72, 8,78] within 0.5mg, [2.80, 9.06] within 1.0mg) allow for the rejection of the null hypothesis and a confirmation that there is correlation between doseage levels and tooth length. The confidence interval for dose level 2.0[-3.80, 3.64] is not enough to reject the null hypothesis.
+
+## Conclusions and Assumptions
+
+It must assumed that: 
+
+    * these poplulations are independent, 
+    * the variances between populations are different, 
+    * a random population was used, 
+    * the population was comprised of similar guinea pigs, 
+    * measurement error was accounted for with significant digits, 
+    * double blind research methods were used. 
+
+For the populations to be independent, 60 guinea pigs would have to be used so each combination of dose level and delivery method were not affected by the other methods. 
+
+Working under the assumption that the above conditions are true, it is possible to infer that there is a significant difference between tooth length and dose levels across both delivery methods. A higher dose level consistently led to longer teeth. Initially it appeared that the delivery method had no significant impact on tooth length, but when controlling for dose level we discovered that there was a significant difference at 0.5mg and 1.0mg, but not at 2.0mg. Based on this evidence, it appears that orange juice is a better delivery method with a larger impact on tooth length for a given dose of Vitamin C, but above a maximum dose level there is no further improvement.
+
