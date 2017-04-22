@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Statistical Inference Course - Project 2, Part 2
 
 ## Project Overview
-The goal of this project is to load the Tooth Growth dataset and perform basic data exploration and analysis:
+The goal of this project is to load the Tooth Growth dataset and perform basic data exploration and analysis.  The complete source code for the analysis can be found at https://github.com/dproksch/Stat-Inf-projet2
 
 
 ## Load the required Data
